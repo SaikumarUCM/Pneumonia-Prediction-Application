@@ -8,6 +8,12 @@ An AI-powered application designed to detect pneumonia from chest X-ray images u
 - **Streamlit Frontend**: A user-friendly web interface for uploading X-ray images and viewing real-time predictions.
 - **Pre-processing Pipeline**: Integrated image normalization and resizing to ensure consistent model input.
 
+## 📸 Screenshots
+
+![App Overview](utils/screenshot-1.png)
+
+![Detailed View](utils/screenshot-2.png)
+
 ## 🛠️ Tech Stack
 - **Language**: Python
 - **Deep Learning Framework**: PyTorch, Torchvision
