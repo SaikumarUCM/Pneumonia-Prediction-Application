@@ -18,10 +18,14 @@ if uploaded_file is not None:
                 if response.status_code == 200:
                     result = response.json()
                     prediction = result.get("prediction", "Unknown")
+                    confidence = result.get("confidence", 0)
+                    confidence_pct = confidence * 100
                     if prediction == "PNEUMONIA":
-                        st.error(f"Prediction: {prediction}")
+                        st.error(f"Prediction: **{prediction}**")
                     else:
-                        st.success(f"Prediction: {prediction}")
+                        st.success(f"Prediction: **{prediction}**")
+                    st.metric(label="Confidence", value=f"{confidence_pct:.1f}%")
+                    st.progress(confidence)
                 else:
                     st.error(f"Error: {response.status_code} - {response.text}")
             except requests.exceptions.RequestException as e:
