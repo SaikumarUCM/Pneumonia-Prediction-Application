@@ -4,18 +4,26 @@ import requests
 import streamlit as st
 
 API_BASE = os.getenv("API_URL", "http://127.0.0.1:8000").rstrip("/")
+ALLOWED_TYPES = ["jpg", "jpeg", "png"]
+UPLOADER_LABEL = "Chest X-ray only (JPEG/PNG)"
 
 st.title("Pneumonia Detection App")
-st.caption("For educational use only — not for clinical diagnosis.")
-st.write("Upload chest X-ray images to predict pneumonia.")
+
+st.warning(
+    "**Medical disclaimer:** For educational and research use only. "
+    "Not intended for clinical diagnosis. Always consult a qualified healthcare professional."
+)
+
+st.info("Please upload a **grayscale chest X-ray** image in JPEG or PNG format.")
 
 tab_single, tab_batch = st.tabs(["Single Image", "Batch Upload"])
 
 with tab_single:
     uploaded_file = st.file_uploader(
-        "Choose an image file",
-        type=["jpg", "jpeg", "png"],
+        UPLOADER_LABEL,
+        type=ALLOWED_TYPES,
         key="single_upload",
+        help="Chest X-ray images in JPEG or PNG format only.",
     )
 
     if uploaded_file is not None:
@@ -23,7 +31,13 @@ with tab_single:
 
         if st.button("Predict Pneumonia"):
             with st.spinner("Predicting..."):
-                files = {"file": (uploaded_file.name, uploaded_file.getvalue(), uploaded_file.type)}
+                files = {
+                    "file": (
+                        uploaded_file.name,
+                        uploaded_file.getvalue(),
+                        uploaded_file.type,
+                    )
+                }
                 try:
                     response = requests.post(f"{API_BASE}/predict", files=files)
                     if response.status_code == 200:
@@ -44,10 +58,11 @@ with tab_single:
 
 with tab_batch:
     uploaded_files = st.file_uploader(
-        "Choose one or more image files",
-        type=["jpg", "jpeg", "png"],
+        UPLOADER_LABEL,
+        type=ALLOWED_TYPES,
         accept_multiple_files=True,
         key="batch_upload",
+        help="Chest X-ray images in JPEG or PNG format only.",
     )
 
     if uploaded_files:
