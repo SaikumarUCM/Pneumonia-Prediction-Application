@@ -1,9 +1,13 @@
 fastapi
-uvicorn
+uvicorn[standard]
 torch
 torchvision
+onnx
+onnxruntime
+onnxscript
 pillow
 numpy
 python-multipart
+scikit-learn
 streamlit
 requests

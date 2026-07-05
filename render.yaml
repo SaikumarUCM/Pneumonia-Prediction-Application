@@ -1,0 +1,30 @@
+services:
+  - type: web
+    name: pneumonia-api
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile.api
+    dockerContext: .
+    healthCheckPath: /health
+    envVars:
+      - key: PORT
+        value: 8000
+      - key: CORS_ORIGINS
+        value: "*"
+      - key: ONNX_MODEL_PATH
+        value: modelWeights/pneumonia_model.onnx
+
+  - type: web
+    name: pneumonia-ui
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile.streamlit
+    dockerContext: .
+    envVars:
+      - key: PORT
+        value: 8501
+      - key: API_URL
+        fromService:
+          type: web
+          name: pneumonia-api
+          envVarKey: RENDER_EXTERNAL_URL

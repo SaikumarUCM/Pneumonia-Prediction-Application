@@ -13,8 +13,8 @@ venv/
 "Model Notebooks/env/"
 
 # Data and Weights
-Model\ Notebooks/data/
-modelWeights/
-# Data and Weights
-Model\ Notebooks/data/
-modelWeights/
+Model Notebooks/data/
+modelWeights/*.pth
+# Keep ONNX artifacts for cloud deployment (Render Docker build)
+!modelWeights/*.onnx
+!modelWeights/*.onnx.data

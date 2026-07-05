@@ -1,0 +1,15 @@
+.venv
+venv
+env
+__pycache__
+*.py[cod]
+.git
+.gitignore
+Model Notebooks/data
+Model Notebooks/env
+*.md
+!deploy/**
+utils/.DS_Store
+.DS_Store
+uv.lock
+.python-version
